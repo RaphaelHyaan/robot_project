@@ -12,7 +12,7 @@ L2 = PrismaticMDH(theta=pi/2, a=0, alpha=pi/2, offset=10, qlim=[0, 20])
 L3 = RevoluteMDH(d=10, a=0, alpha=-pi/2, qlim=[-pi, pi])
 L4 = RevoluteMDH(d=0, a=5, alpha=pi/2, offset=pi/2, qlim=[-pi, pi])
 L5 = RevoluteMDH(d=0, a=5, alpha=0, offset=pi/2, qlim=[-pi, pi])
-L6 = RevoluteMDH(d=0, a=5, alpha=0, offset=0, qlim=[-pi, pi])
+L6 = RevoluteMDH(d=0, a=5, alpha = pi/2, offset=0, qlim=[-pi, pi])
 
 # 创建机器人
 robot = DHRobot([L1, L2, L3, L4, L5, L6], name='my_robot')
