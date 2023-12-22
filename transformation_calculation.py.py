@@ -1,4 +1,9 @@
-import numpy as np
+"""
+transformation_calculation.py
+
+This file aims to calculate the reachable space of a robotic arm and visualize it.
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -10,17 +15,19 @@ epsilon = np.linspace(-3,3,N)
 one = np.ones(N)
 zero = np.zeros(N)
 
-def foi(A,B):
+def foi(A, B):
     '''
-    A:(4,4,x)
-    B:(4,4,x)
+    A: (4,4,x)
+    B: (4,4,x)
+    Calculates the composition of transformations A and B.
+    Returns a matrix C of shape (4,4,x), where x is the number of transformations.
     '''
     C = np.zeros((4,4,np.shape(A)[2]*np.shape(B)[2]))
     k = 0
     for i in range(np.shape(A)[2]):
         for j in range(np.shape(B)[2]):
-            C[:,:,k] = np.dot(A[:,:,i],B[:,:,j])
-            k+=1
+            C[:,:,k] = np.dot(A[:,:,i], B[:,:,j])
+            k += 1
     return C
 
 T_23 = np.array([[np.cos(alpha), -np.sin(alpha), zero, zero],
@@ -43,8 +50,7 @@ T_56 = np.array([[np.cos(epsilon), -np.sin(epsilon), 0*one, 5*one],
     [0*one, 0*one, 1*one, 0*one],
     [0*one, 0*one, 0*one, 1*one]])
 
-T_26 = foi(foi(T_23,T_34),foi(T_45,T_56))
-print()
+T_26 = foi(foi(T_23, T_34), foi(T_45, T_56))
 
 x = np.linspace(0,30,N)
 y = np.linspace(0,20,N)
@@ -55,21 +61,21 @@ for i in range(N):
         in_points[0,k] = x[i]
         in_points[1,k] = y[j]
         in_points[3,k] = 1
-        k+=1
+        k += 1
 
 out_points = np.zeros((4,N*N*N*N*N*N))
 i = 0
 for p in in_points.T:
-    for  t in T_26.T:
-        out_points[:,i] = np.dot(t,p)
-        i+=1
-print(np.max(out_points))
+    for t in T_26.T:
+        out_points[:,i] = np.dot(t, p)
+        i += 1
+
+max_out_point = np.max(out_points)
 
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
-ax.scatter(out_points[0,:],out_points[1,:],out_points[2,:],c='r',marker='o', alpha=0.5, s=0.1)
+ax.scatter(out_points[0,:], out_points[1,:], out_points[2,:], c='r', marker='o', alpha=0.5, s=0.1)
 ax.set_xlabel('X')
 ax.set_ylabel('Y')
 ax.set_zlabel('Z')
 plt.show()
-print()

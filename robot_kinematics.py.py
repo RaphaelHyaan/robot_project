@@ -1,3 +1,13 @@
+
+"""
+robot_kinematics.py
+
+This file calculates the kinematics and inverse kinematics information of a robotic arm.
+
+Author: [Your Name]
+Date: [Date]
+
+"""
 from math import pi
 from roboticstoolbox import DHRobot, RevoluteMDH, PrismaticMDH
 import roboticstoolbox as rtb
